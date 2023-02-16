@@ -9,14 +9,14 @@ from fastapi_users.db import SQLAlchemyBaseUserTable
 import database as db
 
 
-class Role(db.Model):
+class Role(db.Base):
     __tablename__ = 'users_role'
     id = Column(fields.Integer, primary_key=True)
     name = Column(fields.String(length=255), nullable=False)
     permissions = Column(fields.JSON, default=dict)
 
 
-class User(SQLAlchemyBaseUserTable[int], db.Model):
+class User(SQLAlchemyBaseUserTable[int], db.Base):
     __tablename__ = 'users_user'
     id = Column(fields.Integer, primary_key=True)
     username = Column(fields.String(length=255), nullable=False)

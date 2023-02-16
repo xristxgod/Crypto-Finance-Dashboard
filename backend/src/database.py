@@ -10,17 +10,14 @@ from sqlalchemy.pool import NullPool
 
 import functools
 
-try:
-    from config import settings
-except ModuleNotFoundError:
-    from src.config import settings
+from config import settings
 
 
 engine = create_async_engine(settings.DATABASE_URL, poolclass=NullPool)
 
 metadata = MetaData(settings.DATABASE_INDEXES_NAMING_CONVENTION)
 
-Model = declarative_base(metadata=metadata)
+Base = declarative_base(metadata=metadata)
 
 
 @functools.lru_cache()

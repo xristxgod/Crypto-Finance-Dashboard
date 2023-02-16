@@ -6,6 +6,7 @@ from sqlalchemy.schema import MetaData
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import NullPool
 
 import functools
 
@@ -15,7 +16,7 @@ except ModuleNotFoundError:
     from src.config import settings
 
 
-engine = create_async_engine(settings.DATABASE_URL)
+engine = create_async_engine(settings.DATABASE_URL, poolclass=NullPool)
 
 metadata = MetaData(settings.DATABASE_INDEXES_NAMING_CONVENTION)
 

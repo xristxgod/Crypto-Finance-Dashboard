@@ -1,0 +1,7 @@
+/venv/
+/src/settings/common/local_*
+/src/settings/dev/local_*
+/src/settings/prod/local_*
+
+# Времено
+/alembic/versions/

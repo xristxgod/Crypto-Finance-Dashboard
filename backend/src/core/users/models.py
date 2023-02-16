@@ -1,5 +1,7 @@
 from tortoise import fields
 
+from fastapi_users.db import TortoiseBaseUserModel
+
 from core.common.models import AbstractModel
 from core.common.mixins import TimestampMixin
 
@@ -12,7 +14,7 @@ class Role(AbstractModel):
         table = "users_role"
 
 
-class User(TimestampMixin, AbstractModel):
+class User(TimestampMixin, TortoiseBaseUserModel):
     username = fields.CharField(max_length=255, unique=True)
     email = fields.CharField(max_length=255, unique=True)
     role_id = fields.ForeignKeyField(

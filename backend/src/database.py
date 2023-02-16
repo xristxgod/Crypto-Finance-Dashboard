@@ -10,7 +10,10 @@ from sqlalchemy.pool import NullPool
 
 import functools
 
-from config import settings
+try:
+    from config import settings
+except ModuleNotFoundError:
+    from src.config import settings
 
 
 engine = create_async_engine(settings.DATABASE_URL, poolclass=NullPool)

@@ -4,6 +4,8 @@ from sqlalchemy import Column
 import sqlalchemy.types as fields
 import sqlalchemy.schema as schema
 
+from fastapi_users.db import SQLAlchemyBaseUserTable
+
 from database import metadata
 
 
@@ -13,7 +15,7 @@ class Role(metadata):
     permissions = Column(fields.JSON, default=dict)
 
 
-class User(metadata):
+class User(SQLAlchemyBaseUserTable[int], metadata):
     id = Column(fields.Integer, primary_key=True)
     username = Column(fields.String(length=255), nullable=False)
     email = Column(fields.String(length=255), nullable=False)

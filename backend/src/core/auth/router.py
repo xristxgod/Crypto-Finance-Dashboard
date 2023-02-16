@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from src.core.auth import schemas
-from src.core.auth import config
+from core.auth import schemas
+from core.auth import config
 
 
 router = APIRouter(prefix='/auth')

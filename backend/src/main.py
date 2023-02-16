@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from src import core
-from src import apps
+import core
+import apps
 
 
 app = FastAPI()

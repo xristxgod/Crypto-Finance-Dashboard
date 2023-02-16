@@ -6,16 +6,18 @@ import sqlalchemy.schema as schema
 
 from fastapi_users.db import SQLAlchemyBaseUserTable
 
-from database import metadata
+import database as db
 
 
-class Role(metadata):
+class Role(db.Model):
+    __tablename__ = 'auth_role'
     id = Column(fields.Integer, primary_key=True)
     name = Column(fields.String(length=255), nullable=False)
     permissions = Column(fields.JSON, default=dict)
 
 
-class User(SQLAlchemyBaseUserTable[int], metadata):
+class User(SQLAlchemyBaseUserTable[int], db.Model):
+    __tablename__ = 'auth_user'
     id = Column(fields.Integer, primary_key=True)
     username = Column(fields.String(length=255), nullable=False)
     email = Column(fields.String(length=255), nullable=False)

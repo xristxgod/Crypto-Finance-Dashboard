@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from typing import AsyncGenerator
 
 from sqlalchemy.schema import MetaData
@@ -6,14 +8,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 import functools
-from src.config import settings
 
+try:
+    from config import settings
+except ModuleNotFoundError:
+    from src.config import settings
 
-Base = declarative_base()
 
 engine = create_async_engine(settings.DATABASE_URL)
 
 metadata = MetaData(settings.DATABASE_INDEXES_NAMING_CONVENTION)
+
+Model = declarative_base(metadata=metadata)
 
 
 @functools.lru_cache()

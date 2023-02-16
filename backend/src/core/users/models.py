@@ -17,7 +17,7 @@ class User(TimestampMixin, AbstractModel):
     email = fields.CharField(max_length=255, unique=True)
     role_id = fields.ForeignKeyField(
         'models.Role', on_delete=fields.SET_NULL, null=True,
-        related_name='users_role'
+        related_name='users'
     )
     hashed_password = fields.CharField(max_length=255)
     is_active = fields.BooleanField(default=True)

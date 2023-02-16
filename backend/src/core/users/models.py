@@ -10,14 +10,14 @@ import database as db
 
 
 class Role(db.Model):
-    __tablename__ = 'auth_role'
+    __tablename__ = 'users_role'
     id = Column(fields.Integer, primary_key=True)
     name = Column(fields.String(length=255), nullable=False)
     permissions = Column(fields.JSON, default=dict)
 
 
 class User(SQLAlchemyBaseUserTable[int], db.Model):
-    __tablename__ = 'auth_user'
+    __tablename__ = 'users_user'
     id = Column(fields.Integer, primary_key=True)
     username = Column(fields.String(length=255), nullable=False)
     email = Column(fields.String(length=255), nullable=False)

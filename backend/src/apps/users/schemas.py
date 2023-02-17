@@ -1,4 +1,4 @@
-from pydantic import Field
+from pydantic import BaseModel, Field
 from fastapi_users import models
 from tortoise.contrib.pydantic import PydanticModel
 
@@ -28,3 +28,7 @@ class UserDB(BodyUser, models.BaseUserDB, PydanticModel):
     class Config:
         orm_mode = True
         orig_model = User
+
+
+class ResponseSuccess(BaseModel):
+    message: bool = True

@@ -17,7 +17,7 @@ class Role(AbstractIntIDModel):
         table = "users_role"
 
 
-class User(TimestampMixin, TortoiseBaseUserModel, AbstractIntIDModel):
+class User(TimestampMixin, TortoiseBaseUserModel):
     username = fields.CharField(max_length=255, unique=True)
     email = fields.CharField(index=True, unique=True, null=False, max_length=255, validators=(EmailValidator(),))
     phone_number = fields.CharField(max_length=20, unique=True, null=True, validators=(RUPhoneValidator(),))

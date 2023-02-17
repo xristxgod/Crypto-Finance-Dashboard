@@ -18,6 +18,7 @@ class Role(AbstractIntIDModel):
 
 class User(TimestampMixin, TortoiseBaseUserModel, AbstractIntIDModel):
     username = fields.CharField(max_length=255, unique=True)
+    phone_number = fields.CharField(max_length=20, unique=True, null=True, validators=[])
     role = fields.ForeignKeyField('models.Role', on_delete=fields.SET_NULL, null=True)
 
     class Meta:

@@ -5,7 +5,6 @@ from config import settings
 from . import schemas
 from . import managers
 
-
 cookie_authentication = CookieAuthentication(
     secret=settings.SECRET_KEY_AUTH,
     cookie_secure=False,

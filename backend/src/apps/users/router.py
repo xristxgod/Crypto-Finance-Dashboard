@@ -14,7 +14,7 @@ from apps.auth.config import get_current_active_user, get_current_superuser
 
 router = APIRouter(
     dependencies=[Depends(get_current_active_user)],
-    prefix='users/',
+    prefix='/users',
     tags=['Users'],
 )
 

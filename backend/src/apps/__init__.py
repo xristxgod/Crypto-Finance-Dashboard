@@ -7,7 +7,7 @@ __all__ = (
 )
 
 connector = APIRouter(
-    prefix='v1/',
+    prefix='/v1',
 )
 
 connector.include_router(users.router)

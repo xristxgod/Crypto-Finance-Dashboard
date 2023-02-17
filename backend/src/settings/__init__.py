@@ -12,6 +12,9 @@ __all__ = (
 
 
 class Settings:
+    TITLE: str = TITLE
+    VERSION: str = VERSION
+
     NETWORK: str = NETWORK
     ROOT_DIR = ROOT_DIR
     DATABASE_CONFIG: dict = DATABASE_CONFIG

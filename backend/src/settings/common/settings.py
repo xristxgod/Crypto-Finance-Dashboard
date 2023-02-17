@@ -32,3 +32,6 @@ DATABASE_CONFIG = {
     },
     'timezone': 'UTC'
 }
+
+TITLE = rf'Crypto dashboard: Binance\ByBit | {NETWORK}'
+VERSION = '0.0.1'

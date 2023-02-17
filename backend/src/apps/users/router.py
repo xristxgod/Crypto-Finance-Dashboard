@@ -1,6 +1,7 @@
 from fastapi import status
 from fastapi.routing import APIRouter
 from fastapi.requests import Request
+from fastapi.responses import Response
 from fastapi.params import Depends
 from fastapi.exceptions import HTTPException
 from fastapi_users import models
@@ -57,7 +58,7 @@ async def update_user(
 @router.delete(
     "/{id:uuid}",
     status_code=status.HTTP_204_NO_CONTENT,
-    response_model=schemas.ResponseSuccess,
+    response_class=Response,
     dependencies=[Depends(get_current_superuser)],
 )
 async def delete_user(
@@ -65,4 +66,3 @@ async def delete_user(
     user_manager: BaseUserManager[models.UC, models.UD] = Depends(get_user_manager),
 ):
     await user_manager.delete(user)
-    return schemas.ResponseSuccess()

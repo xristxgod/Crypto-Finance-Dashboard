@@ -15,7 +15,7 @@ DATABASE_CONFIG = {
             'engine': 'tortoise.backends.asyncpg',
             'credentials': {
                 'host': os.getenv('DATABASE_HOST'),
-                'port': os.getenv('DATABASE_PORT'),
+                'port': int(os.getenv('DATABASE_PORT', '5432')),
                 'user': os.getenv('DATABASE_USER'),
                 'password': os.getenv('DATABASE_PASSWORD'),
                 'database': os.getenv('DATABASE_NAME'),

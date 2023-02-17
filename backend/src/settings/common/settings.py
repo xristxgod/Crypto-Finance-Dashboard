@@ -7,9 +7,9 @@ NETWORK = os.getenv('NETWORK', 'DEV')
 
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
-APPS_MODELS = (
+APPS_MODELS = [
     'apps.users.models',
-)
+]
 
 DATABASE_CONFIG = {
     'connections': {
@@ -25,9 +25,8 @@ DATABASE_CONFIG = {
         },
     },
     'apps': {
-        'my_app': {
+        'crypto_dashboard': {
             'models': APPS_MODELS,
-            'default_connection': 'default',
         }
     },
     'timezone': 'UTC'

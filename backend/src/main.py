@@ -1,6 +1,6 @@
 import fastapi
 
-from apps import connector
+import apps
 from core import database
 from config import settings
 
@@ -11,4 +11,5 @@ app = fastapi.FastAPI(
 
 database.connect(app)
 
-app.include_router(connector, prefix='/api')
+app.include_router(apps.connector, prefix='/api')
+app.include_router(apps.connector_v1, prefix='/api/v1')

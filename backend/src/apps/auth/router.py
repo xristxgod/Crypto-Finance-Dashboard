@@ -3,10 +3,7 @@ from fastapi.routing import APIRouter
 
 from .config import fastapi_users, get_current_superuser, cookie_authentication, jwt_authentication
 
-router = APIRouter(
-    prefix='/auth',
-    tags=['Auth'],
-)
+router = APIRouter()
 
 router.include_router(
     # fastapi_users.get_auth_router(jwt_authentication),

@@ -4,12 +4,21 @@ from . import users
 from . import auth
 
 __all__ = (
-    'connector',
+    'connector_v1',
 )
 
-connector = APIRouter(
-    prefix='/v1',
-)
+connector = APIRouter()
+connector_v1 = APIRouter()
 
-connector.include_router(users.router)
-connector.include_router(auth.router)
+# Connector V1
+connector_v1.include_router(
+    users.router,
+    prefix='/users',
+    tags=['Users'],
+)
+# Connector
+connector.include_router(
+    auth.router,
+    prefix='/auth',
+    tags=['Auth'],
+)

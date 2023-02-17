@@ -2,7 +2,7 @@ from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import CookieAuthentication, JWTAuthentication
 
 from config import settings
-from . import schemas
+from apps.users import schemas
 from . import managers
 
 cookie_authentication = CookieAuthentication(

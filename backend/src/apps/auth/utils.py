@@ -1,6 +1,6 @@
 from fastapi_users.db import TortoiseUserDatabase
 
-from .schemas import UserDB
+from apps.users.schemas import UserDB
 from apps.users.models import User
 
 __all__ = (

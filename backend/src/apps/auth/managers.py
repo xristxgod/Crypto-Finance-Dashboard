@@ -6,7 +6,7 @@ from fastapi_users.manager import BaseUserManager
 from fastapi_users.db import TortoiseUserDatabase
 
 from config import settings
-from .schemas import BodyUserCreate, UserDB
+from apps.users.schemas import BodyUserCreate, UserDB
 from .utils import get_user_db
 
 __all__ = (

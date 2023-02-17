@@ -34,3 +34,6 @@ DATABASE_CONFIG = {
 
 TITLE = rf'Crypto dashboard: Binance\ByBit | {NETWORK}'
 VERSION = '0.0.1'
+
+SECRET_KEY_AUTH = os.getenv('SECRET_KEY_AUTH')
+

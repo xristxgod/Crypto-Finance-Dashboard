@@ -18,3 +18,5 @@ class Settings:
     NETWORK: str = NETWORK
     ROOT_DIR = ROOT_DIR
     DATABASE_CONFIG: dict = DATABASE_CONFIG
+
+    SECRET_KEY_AUTH: str = SECRET_KEY_AUTH

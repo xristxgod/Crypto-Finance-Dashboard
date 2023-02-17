@@ -7,9 +7,7 @@ NETWORK = os.getenv('NETWORK', 'DEV')
 
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
-APPS_MODELS = (
-    '',
-)
+APPS_MODELS = ()
 
 DATABASE_CONFIG = {
     'connections': {

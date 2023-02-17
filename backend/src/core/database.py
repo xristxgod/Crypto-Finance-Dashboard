@@ -8,7 +8,7 @@ from config import settings
 
 def connect(
         app: fastapi.FastAPI,
-        config: dict = settings.LOCAL_DATABASE_PATH,
+        config: dict = settings.DATABASE_CONFIG,
 ) -> typing.NoReturn:
     register_tortoise(
         app=app,

@@ -3,6 +3,8 @@ from __future__ import absolute_import
 import os
 from pathlib import Path
 
+NETWORK = os.getenv('NETWORK', 'DEV')
+
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
 APPS_MODELS = (

@@ -9,19 +9,19 @@ from apps.users.models import Role
 class BodyUser(models.BaseUser):
     username: str
     phone_number: str
-    role: Role = Field(alias='role_id')
+    role_id: int
 
 
 class BodyUserCreate(models.BaseUserCreate):
     username: str
     phone_number: str
-    role: Role = Field(alias='role_id')
+    role_id: int
 
 
 class BodyUserUpdate(models.BaseUserUpdate):
     username: str
     phone_number: str
-    role: Role = Field(alias='role_id')
+    role_id: int
 
 
 class UserDB(BodyUser, models.BaseUserDB, PydanticModel):

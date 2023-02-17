@@ -1,6 +1,7 @@
 from fastapi.routing import APIRouter
 
 from . import users
+from . import auth
 
 __all__ = (
     'connector',
@@ -11,3 +12,4 @@ connector = APIRouter(
 )
 
 connector.include_router(users.router)
+connector.include_router(auth.router)

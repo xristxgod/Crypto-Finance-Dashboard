@@ -11,4 +11,4 @@ app = fastapi.FastAPI(
 
 database.connect(app)
 
-app.include_router(connector)
+app.include_router(connector, prefix='/api')

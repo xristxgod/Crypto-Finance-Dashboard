@@ -17,7 +17,7 @@ jwt_authentication = JWTAuthentication(
 )
 
 
-fastapi_cookies = FastAPIUsers(
+fastapi_users = FastAPIUsers(
     managers.get_user_manager,
     (
         # Cookie
@@ -31,5 +31,5 @@ fastapi_cookies = FastAPIUsers(
     schemas.UserDB,
 )
 
-get_current_active_user = fastapi_cookies.current_user(active=True)
-get_current_superuser = fastapi_cookies.current_user(superuser=True)
+get_current_active_user = fastapi_users.current_user(active=True)
+get_current_superuser = fastapi_users.current_user(superuser=True)

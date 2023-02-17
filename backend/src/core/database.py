@@ -1,26 +1,23 @@
 import typing
 
-from tortoise import Tortoise
+import fastapi
+from tortoise.contrib.fastapi import register_tortoise
 
 from config import settings
 
 
-async def connect(
+def connect(
+        app: fastapi.FastAPI,
         config: dict = settings.LOCAL_DATABASE_PATH,
-        generate_schemas: bool = True,
-        create_db: bool = False
 ) -> typing.NoReturn:
-    await Tortoise.init(
+    register_tortoise(
+        app=app,
         **config,
-        _create_db=create_db
+        generate_schemas=True,
+        add_exception_handlers=True,
     )
-    if generate_schemas:
-        await Tortoise.generate_schemas()
-
-
-async def close() -> typing.NoReturn:
-    await Tortoise.close_connections()
 
 
 async def drop() -> typing.NoReturn:
+    from tortoise import Tortoise
     await Tortoise._drop_databases()

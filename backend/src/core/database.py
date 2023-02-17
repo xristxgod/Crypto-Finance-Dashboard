@@ -12,7 +12,7 @@ def connect(
 ) -> typing.NoReturn:
     register_tortoise(
         app=app,
-        **config,
+        config=config,
         generate_schemas=True,
         add_exception_handlers=True,
     )

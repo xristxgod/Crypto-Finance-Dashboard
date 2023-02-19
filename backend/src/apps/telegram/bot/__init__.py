@@ -1,4 +1,4 @@
-from .main import dp, bot_app as bot
+from .app import dp, app as bot
 from .router import router
 
 __all__ = (

@@ -18,7 +18,8 @@ router = APIRouter(
 )
 
 
-@router.get("/me", response_model=schemas.UserDB)
+@router.get("/me", response_model=schemas.UserDB,
+            response_model_exclude={'hashed_password'})
 async def me(user: schemas.UserDB = Depends(current_active_user)):
     return user
 

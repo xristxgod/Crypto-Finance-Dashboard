@@ -21,8 +21,8 @@ class BodyUserCreate(models.BaseUserCreate):
 
 class BodyUserUpdate(models.BaseUserUpdate):
     username: str
-    phone_number: str
-    email: Optional[EmailStr] = None
+    phone_number: Optional[str]
+    email: Optional[EmailStr]
 
 
 class UserDB(BodyUser, models.BaseUserDB, PydanticModel):

@@ -1,19 +1,20 @@
 from fastapi_users import FastAPIUsers
-from fastapi_users.authentication import JWTAuthentication
+from fastapi_users.authentication import CookieAuthentication
 
 from config import settings
 from apps.users import schemas
 from . import managers
 
-jwt_authentication = JWTAuthentication(
+cookie_authentication = CookieAuthentication(
     secret=settings.SECRET_KEY_AUTH,
-    lifetime_seconds=3600,
+    cookie_secure=False,
+    cookie_httponly=False,
 )
 
 
 fastapi_users = FastAPIUsers(
     managers.get_user_manager,
-    [jwt_authentication],
+    [cookie_authentication],
     schemas.BodyUser,
     schemas.BodyUserCreate,
     schemas.BodyUserUpdate,

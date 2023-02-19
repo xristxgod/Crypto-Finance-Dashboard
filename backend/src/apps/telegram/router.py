@@ -1,6 +1,10 @@
 from fastapi import APIRouter
 from fastapi.params import Depends
+from fastapi.requests import Request
 
+from aiogram import Dispatcher, Bot, types
+
+from config import settings
 from apps.auth.config import current_active_user
 from apps.users.utils import get_user_or_404
 from apps.telegram import schemas

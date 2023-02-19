@@ -8,6 +8,7 @@ __all__ = (
     'connector_v1',
 )
 
+webhooks = APIRouter()
 connector = APIRouter()
 connector_v1 = APIRouter()
 
@@ -28,3 +29,5 @@ connector.include_router(
     prefix='/auth',
     tags=['Auth'],
 )
+# Webhooks
+webhooks.include_router(telegram.bot.router, prefix='/telegram')

@@ -13,3 +13,5 @@ database.connect(app)
 
 app.include_router(apps.connector, prefix='/api')
 app.include_router(apps.connector_v1, prefix='/api/v1')
+# Webhooks
+app.include_router(apps.webhooks, prefix='/webhook', tags=['Webhooks'])

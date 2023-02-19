@@ -23,7 +23,7 @@ fastapi_users = FastAPIUsers(
         # Cookie
         cookie_authentication,
         # JWT
-        jwt_authentication,
+        # jwt_authentication,
     ),
     schemas.BodyUser,
     schemas.BodyUserCreate,

@@ -12,7 +12,7 @@ class Telegram(TimestampMixin, models.Model):
     chat_id = fields.BigIntField(pk=True)
     username = fields.CharField(max_length=255, default=None)
     is_active = fields.BooleanField(default=True)
-    user = fields.OneToOneField('crypto_dashboard.User', related_name='telegram', on_delete=fields.CASCADE)
+    user = fields.OneToOneField('default.User', related_name='telegram', on_delete=fields.CASCADE)
 
     class Meta:
         table = "telegram_telegram"
@@ -20,7 +20,7 @@ class Telegram(TimestampMixin, models.Model):
 
 class TelegramReferralLink(CreatedMixin, models.Model):
     code = fields.CharField(pk=True, max_length=7, default=generate_code(7))
-    user = fields.OneToOneField('crypto_dashboard.User', related_name='telegram_referral_link',
+    user = fields.OneToOneField('default.User', related_name='telegram_referral_link',
                                 on_delete=fields.CASCADE)
 
     _bot_name = settings.TELEGRAM_BOT_NAME

@@ -26,7 +26,7 @@ DATABASE_CONFIG = {
         },
     },
     'apps': {
-        'crypto_dashboard': {
+        'default': {
             'models': APPS_MODELS,
         }
     },

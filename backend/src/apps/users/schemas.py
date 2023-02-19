@@ -8,8 +8,8 @@ from apps.users.models import User
 
 
 class BodyUser(models.BaseUser):
+    username: str
     phone_number: Optional[str] = None
-    role_id: Optional[int] = None
     email: Optional[EmailStr] = None
 
 
@@ -22,7 +22,6 @@ class BodyUserCreate(models.BaseUserCreate):
 class BodyUserUpdate(models.BaseUserUpdate):
     username: str
     phone_number: str
-    role_id: int
 
 
 class UserDB(BodyUser, models.BaseUserDB, PydanticModel):

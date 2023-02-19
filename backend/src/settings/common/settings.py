@@ -9,6 +9,7 @@ ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
 APPS_MODELS = (
     'apps.users.models',
+    'apps.telegram.models',
 )
 
 DATABASE_CONFIG = {
@@ -36,4 +37,6 @@ TITLE = rf'Crypto dashboard: Binance\ByBit | {NETWORK}'
 VERSION = '0.0.1'
 
 SECRET_KEY_AUTH = os.getenv('SECRET_KEY_AUTH')
+
+TELEGRAM_KEY = os.getenv('TELEGRAM_KEY')
 

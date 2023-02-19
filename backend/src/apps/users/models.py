@@ -13,5 +13,7 @@ class User(TimestampMixin, TortoiseBaseUserModel):
     email = fields.CharField(index=True, unique=True, null=True, max_length=255, validators=[EmailValidator()])
     phone_number = fields.CharField(max_length=20, unique=True, null=True, validators=[RUPhoneValidator()])
 
+    telegram = fields.ReverseRelation['Telegram']
+
     class Meta:
         table = "users_user"

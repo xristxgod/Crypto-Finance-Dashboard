@@ -35,8 +35,7 @@ async def telegram_link(user=Depends(current_active_user)):
             return schemas.BodyTelegramReferralLink(url=referral_code.url)
 
     return JSONResponse({
-        'message': 'This account is already in the system',
-        'chat_id': user.telegram.chat_id,
+        'message': 'This account is already in the system'
     })
 
 

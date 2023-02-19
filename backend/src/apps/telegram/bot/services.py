@@ -40,15 +40,15 @@ class UserData:
         return self.user is not None
 
     async def add_to_db(self, user: User) -> NoReturn:
-        async with transactions.atomic():
+        async with transactions.in_transaction('default'):
             telegram = Telegram(
                 chat_id=self.chat_id,
                 username=self.username,
                 user=user,
             )
-            self.user = user
             await TelegramReferralLink.filter(user=user).delete()
             await telegram.save()
+            self.user = user
 
     async def setup(self) -> Self:
         self.user = await User.filter(telegram__chat_id=self.telegram_info.id).first()

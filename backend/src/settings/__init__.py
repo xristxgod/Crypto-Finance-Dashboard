@@ -14,6 +14,7 @@ __all__ = (
 class Settings:
     TITLE: str = TITLE
     VERSION: str = VERSION
+    APPS_MODELS: tuple = APPS_MODELS
 
     NETWORK: str = NETWORK
     ROOT_DIR = ROOT_DIR

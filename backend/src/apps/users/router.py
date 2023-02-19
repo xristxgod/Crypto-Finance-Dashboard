@@ -11,22 +11,22 @@ from fastapi_users.manager import BaseUserManager, InvalidPasswordException, Use
 from . import schemas
 from .utils import get_user_or_404
 from apps.auth.managers import get_user_manager
-from apps.auth.config import get_current_active_user, get_current_superuser
+from apps.auth.config import current_active_user, current_superuser
 
 router = APIRouter(
-    dependencies=[Depends(get_current_active_user)],
+    dependencies=[Depends(current_active_user)],
 )
 
 
 @router.get("/me", response_model=schemas.UserDB)
-async def me(user: schemas.UserDB = Depends(get_current_active_user)):
+async def me(user: schemas.UserDB = Depends(current_active_user)):
     return user
 
 
 @router.patch(
     "/{id:uuid}",
     response_model=schemas.BodyUser,
-    dependencies=[Depends(get_current_superuser)],
+    dependencies=[Depends(current_superuser)],
 )
 async def update_user(
     body: schemas.BodyUserUpdate,
@@ -57,7 +57,7 @@ async def update_user(
     "/{id:uuid}",
     status_code=status.HTTP_204_NO_CONTENT,
     response_class=Response,
-    dependencies=[Depends(get_current_superuser)],
+    dependencies=[Depends(current_superuser)],
 )
 async def delete_user(
     user=Depends(get_user_or_404),

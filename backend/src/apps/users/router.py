@@ -18,8 +18,10 @@ router = APIRouter(
 )
 
 
-@router.get("/me", response_model=schemas.UserDB,
-            response_model_exclude={'hashed_password'})
+@router.get(
+    "/me", response_model=schemas.UserDB,
+    response_model_exclude={'hashed_password'}
+)
 async def me(user: schemas.UserDB = Depends(current_active_user)):
     return user
 
@@ -30,10 +32,10 @@ async def me(user: schemas.UserDB = Depends(current_active_user)):
     dependencies=[Depends(current_superuser)],
 )
 async def update_user(
-    body: schemas.BodyUserUpdate,
-    request: Request,
-    user=Depends(get_user_or_404),
-    user_manager: BaseUserManager[models.UC, models.UD] = Depends(get_user_manager),
+        body: schemas.BodyUserUpdate,
+        request: Request,
+        user=Depends(get_user_or_404),
+        user_manager: BaseUserManager[models.UC, models.UD] = Depends(get_user_manager),
 ):
     try:
         return await user_manager.update(
@@ -61,7 +63,7 @@ async def update_user(
     dependencies=[Depends(current_superuser)],
 )
 async def delete_user(
-    user=Depends(get_user_or_404),
-    user_manager: BaseUserManager[models.UC, models.UD] = Depends(get_user_manager),
+        user=Depends(get_user_or_404),
+        user_manager: BaseUserManager[models.UC, models.UD] = Depends(get_user_manager),
 ):
     await user_manager.delete(user)

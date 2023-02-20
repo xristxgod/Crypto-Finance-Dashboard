@@ -19,7 +19,7 @@ router = APIRouter(
     '/',
     response_model=schemas.TelegramDB | schemas.BodyTelegramReferralLink,
 )
-async def telegram_link(user=Depends(current_active_user)):
+async def get_telegram(user=Depends(current_active_user)):
     referral = await TelegramReferralLink.filter(user_id=user.id)
     if referral:
         return schemas.BodyTelegramReferralLink(

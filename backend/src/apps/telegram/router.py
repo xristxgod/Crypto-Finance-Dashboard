@@ -6,7 +6,6 @@ from tortoise import transactions
 
 from apps.auth.config import current_active_user
 from apps.users.utils import get_user_or_404
-from apps.users.models import User
 from apps.telegram import schemas
 from .models import Telegram, TelegramReferralLink
 
@@ -17,9 +16,8 @@ router = APIRouter(
 
 
 @router.get(
-    '/link',
-    response_model=schemas.BodyTelegramReferralLink,
-    response_class=JSONResponse
+    '/',
+    response_model=schemas.TelegramDB | schemas.BodyTelegramReferralLink,
 )
 async def telegram_link(user=Depends(current_active_user)):
     referral = await TelegramReferralLink.filter(user_id=user.id)
@@ -34,9 +32,7 @@ async def telegram_link(user=Depends(current_active_user)):
             await referral_code.save()
             return schemas.BodyTelegramReferralLink(url=referral_code.url)
 
-    return JSONResponse({
-        'message': 'This account is already in the system'
-    })
+    return await schemas.TelegramDB.from_queryset_single(Telegram.get(user_id=user.id))
 
 
 @router.patch(

@@ -9,6 +9,11 @@ from .models import Service
 from .models import Account
 
 
+class BodyService(BaseModel):
+    id: str
+    credential_manager_cls_name: str
+
+
 class BodyAccount(BaseModel):
     id: UUID4
     name: str
@@ -22,10 +27,12 @@ class BodyAccountDetail(BodyAccount):
 
 
 class AccountDB(BodyAccount, PydanticModel):
-
     class Config:
         orm_mode = True
         orig_model = Account
 
-    def with_keys(self) -> BodyAccountDetail:
-        pass
+
+class ServiceDB(BodyService, PydanticModel):
+    class Config:
+        orm_mode = True
+        orig_model = Service

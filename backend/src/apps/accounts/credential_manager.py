@@ -6,6 +6,7 @@ from dataclasses import dataclass, asdict
 import keyring
 
 __all__ = (
+    'BaseCredentialManager',
     'binance_manager',
     'Keys',
 )
@@ -19,6 +20,10 @@ class Keys:
 
 class BaseCredentialManager:
     service_name: str
+
+    @classmethod
+    def name(cls) -> str:
+        return cls.__name__
 
     @classmethod
     def _encode(cls, keys: dict | Keys) -> str:

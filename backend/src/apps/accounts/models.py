@@ -11,9 +11,11 @@ from apps.accounts.validators import CredentialManagerValidator
 
 class Service(models.Model):
     id = fields.CharField(pk=True, max_length=20)
-    credential_manager_cls_name = fields.CharField(max_length=255,
-                                          description='link to the object on the way: apps.accounts.credential_manager',
-                                          validators=[CredentialManagerValidator()])
+    credential_manager_cls_name = fields.CharField(
+        max_length=255,
+        description='link to the object on the way: apps.accounts.credential_manager',
+        validators=[CredentialManagerValidator()]
+    )
 
     class CredentialManagerDoesNotExist(Exception):
         pass

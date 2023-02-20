@@ -10,6 +10,7 @@ ROOT_DIR = Path(__file__).parent.parent.parent.parent
 APPS_MODELS = (
     'apps.users.models',
     'apps.telegram.models',
+    'apps.accounts.models',
 )
 
 DATABASE_CONFIG = {

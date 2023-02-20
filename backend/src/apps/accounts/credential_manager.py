@@ -1,6 +1,8 @@
+from __future__ import absolute_import, annotations
+
 import uuid
 import json
-from typing import NoReturn
+from typing import Type, NoReturn
 from dataclasses import dataclass, asdict
 
 import keyring
@@ -9,7 +11,15 @@ __all__ = (
     'BaseCredentialManager',
     'binance_manager',
     'Keys',
+    'get_active_managers',
 )
+
+
+async def get_active_managers() -> tuple[Type[BaseCredentialManager]]:
+    """ Active managers """
+    return (
+        binance_manager,
+    )
 
 
 @dataclass()

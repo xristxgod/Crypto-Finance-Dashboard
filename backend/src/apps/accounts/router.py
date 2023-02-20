@@ -6,12 +6,10 @@ router = APIRouter()
 
 @router.on_event("startup")
 async def on_startup():
-    from fastapi.logger import logger
     from tortoise import transactions
     from apps.accounts.models import Service
     from apps.accounts.credential_manager import get_active_managers
 
-    logger.error('Update Credential Managers')
     cls_managers = await get_active_managers()
     async with transactions.in_transaction('default'):
         for obj in await Service.all():

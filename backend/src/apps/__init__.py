@@ -25,7 +25,7 @@ connector_v1.include_router(
     tags=['Telegram'],
 )
 connector_v1.include_router(
-    telegram.router,
+    accounts.router,
     prefix='/accounts',
     tags=['Accounts'],
 )

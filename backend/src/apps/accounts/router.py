@@ -1,7 +1,11 @@
 from fastapi import APIRouter
+from fastapi.requests import Request
 from fastapi.params import Depends
 
 from apps.auth.config import current_active_user
+from apps.accounts.models import Account
+from apps.accounts import schemas
+from apps.accounts.utils import get_account_or_404
 
 router = APIRouter()
 
@@ -24,7 +28,24 @@ async def on_startup():
 
 
 @router.get(
-    '/'
+    '/',
+    response_model=list[schemas.AccountDB],
 )
 async def get_accounts(user=Depends(current_active_user)):
-    pass
+    return await schemas.AccountDB.from_queryset(Account.filter(user_id=user.id))
+
+
+@router.get(
+    '/{id:uuid}',
+    response_model=schemas.BodyAccountDetail,
+    dependencies=[Depends(current_active_user)],
+)
+async def get_account_detail(account: Account = Depends(get_account_or_404)):
+    return schemas.BodyAccountDetail(
+        id=account.id,
+        name=account.name,
+        service=account.service.name,
+        created_at=account.created_at,
+        modified_at=account.modified_at,
+        keys=account.get_keys(),
+    )

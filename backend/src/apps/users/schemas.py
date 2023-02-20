@@ -1,9 +1,8 @@
-from typing import Optional, List
+from typing import Optional
 
 from pydantic import EmailStr
 from fastapi_users import models
 from tortoise.contrib.pydantic import PydanticModel
-from tortoise.queryset import QuerySet
 
 from apps.users.models import User
 
@@ -27,14 +26,6 @@ class BodyUserUpdate(models.BaseUserUpdate):
 
 
 class UserDB(BodyUser, models.BaseUserDB, PydanticModel):
-
-    @classmethod
-    async def from_queryset_single(cls, queryset: "QuerySet") -> "List[PydanticModel]":
-        return await queryset.prefetch_related('telegram')
-
-    @classmethod
-    async def from_orm(cls, *args, **kwargs):
-        print('Tut')
 
     class Config:
         orm_mode = True

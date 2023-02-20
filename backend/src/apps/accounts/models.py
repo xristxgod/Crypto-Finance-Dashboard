@@ -5,6 +5,7 @@ from tortoise import fields
 
 from apps.common import mixins
 from apps.common.models import AbstractUUIDIDModel
+from apps.accounts.utils import keys_validator
 from apps.accounts.credential_manager import BaseCredentialManager, Keys
 from apps.accounts.validators import CredentialManagerValidator
 
@@ -54,6 +55,7 @@ class Account(mixins.TimestampMixin, AbstractUUIDIDModel):
         # Add credential manager cls
         self.credential_manager = self.service.obj
 
+    @keys_validator
     async def set_keys(self, public, secret) -> NoReturn:
         await self.credential_manager.set(self.id, public, secret)
 

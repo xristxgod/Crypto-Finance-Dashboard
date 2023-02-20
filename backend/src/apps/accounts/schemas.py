@@ -26,6 +26,11 @@ class BodyAccountDetail(BodyAccount):
     keys: Optional[Keys] = Field(default_factory=dict)
 
 
+class BodyCreateAccount(BaseModel):
+    name: str
+    keys: Optional[Keys] = Field(default_factory=dict)
+
+
 class AccountDB(BodyAccount, PydanticModel):
     class Config:
         orm_mode = True

@@ -2,7 +2,7 @@ from typing import Optional, NoReturn, Self
 from dataclasses import dataclass
 
 from aiogram import types
-from tortoise import transactions, exceptions
+from tortoise import transactions
 
 from apps.telegram.models import Telegram, TelegramReferralLink
 from apps.users.models import User
@@ -20,10 +20,10 @@ class UserData:
 
     def __init__(self, obj: types.Message):
         self.telegram_info = TelegramInfo(
-           id=obj.chat.id,
-           username='@' + obj.chat.username,
-           first_name=obj.chat.first_name,
-           last_name=obj.chat.last_name,
+            id=obj.chat.id,
+            username='@' + obj.chat.username,
+            first_name=obj.chat.first_name,
+            last_name=obj.chat.last_name,
         )
         self.user: Optional[User] = None
 

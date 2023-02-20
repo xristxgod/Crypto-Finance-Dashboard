@@ -1,5 +1,7 @@
 from fastapi import APIRouter
+from fastapi.params import Depends
 
+from apps.auth.config import current_active_user
 
 router = APIRouter()
 
@@ -19,3 +21,10 @@ async def on_startup():
             await Service.update_or_create(id=cls_manager.service_name, defaults=dict(
                 credential_manager_cls_name=cls_manager.name()
             ))
+
+
+@router.get(
+    '/'
+)
+async def get_accounts(user=Depends(current_active_user)):
+    pass

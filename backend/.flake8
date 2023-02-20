@@ -1,5 +1,10 @@
 [flake8]
 exclude =
     requirements
+    venv
 
 max-line-length = 120
+ignore =
+    F403
+
+    F405

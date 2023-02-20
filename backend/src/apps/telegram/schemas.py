@@ -1,9 +1,7 @@
-from datetime import datetime
-
 from pydantic import BaseModel, validator
 from tortoise.contrib.pydantic import PydanticModel
 
-from .models import Telegram, TelegramReferralLink
+from .models import Telegram
 
 
 class BodyTelegram(BaseModel):

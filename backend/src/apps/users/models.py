@@ -2,7 +2,6 @@ from tortoise import fields
 
 from fastapi_users.db import TortoiseBaseUserModel
 
-from apps.common.models import AbstractIntIDModel
 from apps.common.mixins import TimestampMixin
 
 from .validators import EmailValidator, RUPhoneValidator

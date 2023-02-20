@@ -5,7 +5,7 @@ from tortoise import fields
 
 from apps.common import mixins
 from apps.common.models import AbstractUUIDIDModel
-from apps.accounts.utils import keys_validator
+from apps.accounts.decorators import keys_validator
 from apps.accounts.credential_manager import BaseCredentialManager, Keys
 from apps.accounts.validators import CredentialManagerValidator
 

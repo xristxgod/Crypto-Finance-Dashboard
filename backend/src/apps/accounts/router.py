@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from fastapi.params import Depends, Query
+from fastapi.params import Depends
 
 from apps.auth.config import current_active_user
 from apps.accounts.models import Account

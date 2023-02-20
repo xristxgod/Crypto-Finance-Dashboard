@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from fastapi.params import Depends
-from fastapi.responses import JSONResponse
 
 from tortoise import transactions
 

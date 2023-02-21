@@ -43,7 +43,10 @@ class UserManager(BaseUserManager[BodyUserCreate, UserDB]):
         self, credentials: OAuth2PasswordRequestForm
     ) -> Optional[models.UD]:
         try:
-            user = await self.get_by_username(credentials.username)
+            if credentials.username.find('@') > 1:
+                user = await self.get_by_email(credentials.username)
+            else:
+                user = await self.get_by_username(credentials.username)
         except UserNotExists:
             # Run the hasher to mitigate timing attack
             # Inspired from Django: https://code.djangoproject.com/ticket/20760

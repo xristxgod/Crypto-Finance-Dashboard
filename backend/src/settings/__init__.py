@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 from .common import *
+from .tests import *
 
 if NETWORK == 'DEV':
     from .dev import *
@@ -21,6 +22,7 @@ class Settings:
 
     NETWORK: str = NETWORK
     DATABASE_CONFIG: dict = DATABASE_CONFIG
+    TEST_DATABASE_CONFIG: dict = TEST_DATABASE_CONFIG
 
     SECRET_KEY_AUTH: str = SECRET_KEY_AUTH
 

@@ -38,4 +38,4 @@ class BasePhoneValidator(Validator):
 
 class RUPhoneValidator(BasePhoneValidator):
     example = '+79000000000'
-    pattern = r'^(\+7|8)\d{10}$'
+    pattern = r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'

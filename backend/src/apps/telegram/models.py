@@ -36,4 +36,4 @@ class TelegramReferralLink(CreatedMixin, models.Model):
             await code.delete()
 
     class Meta:
-        table = "telegram_telegram_refferal_link"
+        table = "telegram_telegram_referral_link"

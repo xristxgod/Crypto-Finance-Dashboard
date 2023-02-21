@@ -2,6 +2,7 @@
 /src/settings/common/local_*
 /src/settings/dev/local_*
 /src/settings/prod/local_*
+/src/settings/tests/local_*
 
 # Времено
 /alembic/versions/

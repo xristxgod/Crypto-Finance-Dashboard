@@ -4,3 +4,6 @@ pythonpath = [
 ]
 asyncio_mode='auto'
 python_files='tests*.py'
+filterwarnings = [
+  'ignore::DeprecationWarning:'
+]

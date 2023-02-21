@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi import status
 from fastapi.params import Depends
 
 from apps.auth.config import current_active_user
@@ -38,6 +39,23 @@ async def get_active_services():
     return await schemas.ServiceDB.from_queryset(Service.all())
 
 
+@router.post(
+    '/',
+    response_model=schemas.BodyAccountDetail,
+)
+async def create_account(
+        body: schemas.BodyCreateAccount,
+        service=service_choices.render(),
+        user=Depends(current_active_user)
+):
+    return await services.create_account(
+        name=body.name,
+        keys=body.keys,
+        service_id=service,
+        user_id=user.id,
+    )
+
+
 @router.get(
     '/',
     response_model=list[schemas.AccountDB],
@@ -55,18 +73,10 @@ async def get_account_detail(account: Account = Depends(get_account_or_404)):
     return await services.get_account_detail(account)
 
 
-@router.post(
-    '/add',
-    response_model=schemas.BodyAccountDetail,
+@router.delete(
+    '/{id:uuid}',
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(current_active_user)],
 )
-async def create_account(
-        body: schemas.BodyCreateAccount,
-        service=service_choices.render(),
-        user=Depends(current_active_user)
-):
-    return await services.create_account(
-        name=body.name,
-        keys=body.keys,
-        service_id=service,
-        user_id=user.id,
-    )
+async def delete_account(account: Account = Depends(get_account_or_404)):
+    await account.delete()

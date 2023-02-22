@@ -9,7 +9,7 @@ from fastapi_users.db import TortoiseUserDatabase
 
 from config import settings
 from apps.users.schemas import BodyUserCreate, UserDB
-from .utils import get_user_db
+from apps.auth.utils import get_user_db
 
 __all__ = (
     'UserManager',

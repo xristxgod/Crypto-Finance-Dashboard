@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi import status
 from fastapi.params import Depends
+from fastapi.responses import Response
 
 from apps.auth.config import current_active_user
 from apps.accounts.models import Account
@@ -76,6 +77,7 @@ async def get_account_detail(account: Account = Depends(get_account_or_404)):
 @router.delete(
     '/{id:uuid}',
     status_code=status.HTTP_204_NO_CONTENT,
+    response_class=Response,
     dependencies=[Depends(current_active_user)],
 )
 async def delete_account(account: Account = Depends(get_account_or_404)):

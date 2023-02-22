@@ -2,8 +2,7 @@ from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import CookieAuthentication
 
 from config import settings
-from apps.users import schemas
-from . import managers
+from apps.users import schemas, managers
 
 cookie_authentication = CookieAuthentication(
     secret=settings.SECRET_KEY_AUTH,

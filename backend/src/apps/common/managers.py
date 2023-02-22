@@ -1,13 +1,20 @@
-from typing import Generic, TypeVar, Type, Optional, Any, NoReturn
+from typing import Generic, TypeVar, Type, Optional, Any, NoReturn, cast
 
 from fastapi.requests import Request
 from pydantic import BaseModel, UUID4
+from tortoise.models import MODEL
+from tortoise.exceptions import DoesNotExist
+from tortoise.contrib.pydantic.base import PydanticModel
 
 __all__ = (
     'BaseModelDB',
     'BaseManager',
     'ModelDB',
 )
+
+
+class BaseBodyCreate(BaseModel):
+    pass
 
 
 class BaseModelDB(BaseModel):
@@ -17,6 +24,7 @@ class BaseModelDB(BaseModel):
 
 
 ModelDB = TypeVar("ModelDB", bound=BaseModelDB)
+CreateModel = TypeVar('CreateModel', bound=BaseBodyCreate)
 
 
 class BaseDatabase(Generic[ModelDB]):
@@ -38,7 +46,7 @@ class BaseDatabase(Generic[ModelDB]):
         raise NotImplementedError()
 
 
-class BaseManager(Generic[ModelDB]):
+class BaseManager(Generic[CreateModel, ModelDB]):
     db_model: Type[ModelDB]
 
     db: BaseDatabase[ModelDB]
@@ -91,3 +99,46 @@ class BaseManager(Generic[ModelDB]):
 
     async def on_after_delete(self, model: ModelDB, request: Optional[Request] = None) -> NoReturn:
         pass
+
+
+class TortoiseDatabase(BaseDatabase[ModelDB]):
+    model: Type[MODEL]
+
+    def __init__(self, db_model: Type[ModelDB], model: Type[MODEL]):
+        super().__init__(db_model)
+        self.model = model
+
+    async def get(self, id: int | str | UUID4) -> Optional[ModelDB]:
+        try:
+            query = self.model.get(id=id)
+
+            model = await query
+            pydantic_model = await cast(
+                PydanticModel, self.db_model
+            ).from_tortoise_orm(model)
+
+            return cast(ModelDB, pydantic_model)
+        except DoesNotExist:
+            return None
+
+    async def create(self, model: ModelDB) -> ModelDB:
+        user_dict = model.dict()
+
+        model = self.model(**user_dict)
+        await model.save()
+
+        return model
+
+    async def update(self, model: ModelDB) -> ModelDB:
+        model_dict = model.dict()
+        model_dict.pop("id")
+
+        _model = await self.model.get(id=model.id)
+        for field in model_dict:
+            setattr(model, field, model_dict[field])
+        await _model.save()
+
+        return model
+
+    async def delete(self, model: ModelDB) -> None:
+        await self.model.filter(id=model.id).delete()

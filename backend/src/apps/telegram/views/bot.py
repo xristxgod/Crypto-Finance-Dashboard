@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.requests import Request
 from aiogram import Dispatcher, Bot, types
 
-from .app import app, dp
+from apps.telegram.bot.app import app, dp
 from apps.telegram.config import TELEGRAM_WEBHOOK_URL
 
 

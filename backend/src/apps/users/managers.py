@@ -6,6 +6,7 @@ from fastapi_users.manager import BaseUserManager, UserNotExists
 from fastapi_users import models, password
 
 from config import settings
+
 from apps.users.schemas import BodyUserCreate, UserDB
 
 __all__ = (

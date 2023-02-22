@@ -4,7 +4,7 @@ from fastapi_users.db import TortoiseBaseUserModel
 
 from apps.common.mixins import TimestampMixin
 
-from .validators import EmailValidator, RUPhoneValidator
+from apps.users.validators import EmailValidator, RUPhoneValidator
 
 
 class User(TimestampMixin, TortoiseBaseUserModel):

@@ -1,10 +1,10 @@
 from aiogram import types
 
-from .services import UserData
+from apps.telegram.bot import services
 from apps.telegram.models import TelegramReferralLink
 
 
-async def start(message: types.Message, user: UserData):
+async def start(message: types.Message, user: services.UserData):
     if user is None:
         return
 

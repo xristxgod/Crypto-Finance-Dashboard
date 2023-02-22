@@ -4,8 +4,9 @@ from tortoise import models, fields
 
 from config import settings
 from apps.common.utils import generate_code
-from apps.users.models import User
 from apps.common.mixins import TimestampMixin, CreatedMixin
+
+from apps.users import User
 
 
 class Telegram(TimestampMixin, models.Model):

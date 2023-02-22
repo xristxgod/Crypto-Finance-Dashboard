@@ -4,8 +4,9 @@ from dataclasses import dataclass
 from aiogram import types
 from tortoise import transactions
 
+from apps.users import User
+
 from apps.telegram.models import Telegram, TelegramReferralLink
-from apps.users.models import User
 
 
 @dataclass()

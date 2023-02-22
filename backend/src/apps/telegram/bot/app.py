@@ -1,8 +1,8 @@
 from aiogram import Bot, Dispatcher
 
 from config import settings
-from . import middlewares
-from . import handlers
+from apps.telegram.bot import middlewares
+from apps.telegram.bot import handlers
 
 __all__ = (
     'app',

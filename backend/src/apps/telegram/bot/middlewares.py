@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 
-from .services import UserData
+from apps.telegram.bot import services
 
 
 class UserMiddleware(LifetimeControllerMiddleware):
@@ -9,7 +9,7 @@ class UserMiddleware(LifetimeControllerMiddleware):
         if hasattr(obj, "update_id"):
             data['user'] = None
         else:
-            data['user'] = await UserData(obj).setup()
+            data['user'] = await services.UserData(obj).setup()
 
     async def post_process(self, obj, data, *args):
         if 'user' in data.keys():

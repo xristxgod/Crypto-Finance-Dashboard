@@ -7,8 +7,8 @@ from fastapi_users import models
 from fastapi_users.manager import BaseUserManager
 
 from apps.users import schemas
+from apps.users import services
 from apps.users.config import current_active_user, current_superuser
-from apps.users.services import user_services as services
 from apps.users.utils import get_user_manager, get_user_or_404
 
 router = APIRouter(

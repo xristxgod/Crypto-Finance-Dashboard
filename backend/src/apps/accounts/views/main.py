@@ -6,7 +6,7 @@ from fastapi.responses import Response
 from apps.users import current_active_user
 
 from apps.accounts import schemas
-from apps.accounts.services import account_services as services
+from apps.accounts import services
 from apps.accounts.models import Account, Service
 from apps.accounts.utils import get_account_or_404
 from apps.accounts.choices import service_choices

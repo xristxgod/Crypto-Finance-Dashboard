@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from . import users
+from users import views as users_views
 from . import telegram
 from . import accounts
 
@@ -14,7 +14,7 @@ connector_v1 = APIRouter()
 
 # Connector V1
 connector_v1.include_router(
-    users.users_router,
+    users_views.users_router,
     prefix='/users',
     tags=['Users'],
 )
@@ -30,7 +30,7 @@ connector_v1.include_router(
 )
 # Connector
 connector.include_router(
-    users.auth_router,
+    users_views.auth_router,
     prefix='/auth',
     tags=['Auth'],
 )

@@ -35,4 +35,4 @@ connector.include_router(
     tags=['Auth'],
 )
 # Webhooks
-webhooks.include_router(telegram.bot.router, prefix='/telegram')
+webhooks.include_router(telegram_views.bot_router, prefix='/telegram')

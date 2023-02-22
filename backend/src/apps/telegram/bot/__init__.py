@@ -1,5 +1,5 @@
 from .app import dp, app as bot
-from .router import router
+from apps.telegram.views.bot import router
 
 __all__ = (
     'bot',

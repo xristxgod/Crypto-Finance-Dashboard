@@ -3,7 +3,7 @@ from fastapi import status
 from fastapi.params import Depends
 from fastapi.responses import Response
 
-from apps.auth.config import current_active_user
+from apps.users.config import current_active_user
 from apps.accounts.models import Account
 from apps.accounts.models import Service
 from apps.accounts import schemas

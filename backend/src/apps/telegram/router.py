@@ -3,7 +3,7 @@ from fastapi.params import Depends
 
 from tortoise import transactions
 
-from apps.auth.config import current_active_user
+from apps.users.config import current_active_user
 from apps.users.utils import get_user_or_404
 from apps.telegram import schemas
 from .models import Telegram, TelegramReferralLink

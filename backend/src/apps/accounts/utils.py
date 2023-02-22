@@ -1,7 +1,7 @@
 from pydantic import UUID4
 from fastapi.params import Depends
 
-from apps.auth.config import current_active_user
+from apps.users.config import current_active_user
 from .models import Account
 
 

@@ -1,5 +1,6 @@
-from .router import router
+from apps.users.views import users_router, auth_router
 
 __all__ = (
-    'router',
+    'users_router',
+    'auth_router',
 )

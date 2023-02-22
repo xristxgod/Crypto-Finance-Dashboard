@@ -1,16 +1,15 @@
 from fastapi import status
-from fastapi.routing import APIRouter
+from fastapi import APIRouter
 from fastapi.requests import Request
 from fastapi.responses import Response
 from fastapi.params import Depends
 from fastapi_users import models
 from fastapi_users.manager import BaseUserManager
 
-from . import schemas
-from .utils import get_user_or_404
-from apps.users.managers import get_user_manager
-from apps.auth.config import current_active_user, current_superuser
-from apps.users import services
+from apps.users import schemas
+from apps.users.services import user_services as services
+from apps.users.utils import get_user_manager, get_user_or_404
+from apps.users.config import current_active_user, current_superuser
 
 router = APIRouter(
     dependencies=[Depends(current_active_user)],
@@ -50,7 +49,7 @@ async def update_user(
     dependencies=[Depends(current_superuser)],
 )
 @router.delete(
-    "/me/delete", response_model=schemas.UserDB,
+    "/me/delete",
     status_code=status.HTTP_204_NO_CONTENT,
     response_class=Response,
 )
@@ -58,4 +57,4 @@ async def delete_me(
         user: schemas.UserDB = Depends(current_active_user),
         user_manager: BaseUserManager[models.UC, models.UD] = Depends(get_user_manager),
 ):
-    return await services.delete_user(user, user_manager)
+    await services.delete_user(user, user_manager)

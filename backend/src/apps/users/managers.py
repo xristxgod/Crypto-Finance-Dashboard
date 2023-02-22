@@ -1,19 +1,15 @@
 from typing import Optional
 
-from fastapi.params import Depends
 from fastapi.requests import Request
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_users.manager import BaseUserManager, UserNotExists
 from fastapi_users import models, password
-from fastapi_users.db import TortoiseUserDatabase
 
 from config import settings
 from apps.users.schemas import BodyUserCreate, UserDB
-from apps.auth.utils import get_user_db
 
 __all__ = (
     'UserManager',
-    'get_user_manager',
 )
 
 
@@ -64,7 +60,3 @@ class UserManager(BaseUserManager[BodyUserCreate, UserDB]):
             await self.user_db.update(user)
 
         return user
-
-
-def get_user_manager(user_db: TortoiseUserDatabase = Depends(get_user_db)):
-    yield UserManager(user_db)

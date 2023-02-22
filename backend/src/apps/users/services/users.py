@@ -1,17 +1,22 @@
+from typing import NoReturn
+
 from fastapi import status
 from fastapi.requests import Request
 from fastapi.exceptions import HTTPException
 from fastapi_users.router.common import ErrorCode
 from fastapi_users.manager import BaseUserManager, InvalidPasswordException, UserAlreadyExists
 
-from .schemas import UserDB, BodyUserUpdate
+from apps.users import schemas
 
 
-async def delete_user(user: UserDB, manager: BaseUserManager):
+async def delete_user(user: schemas.UserDB, manager: BaseUserManager) -> NoReturn:
     await manager.delete(user)
 
 
-async def update_user(body: BodyUserUpdate, user: UserDB, manager: BaseUserManager, request: Request):
+async def update_user(body: schemas.BodyUserUpdate,
+                      user: schemas.UserDB,
+                      manager: BaseUserManager,
+                      request: Request) -> schemas.BodyUser:
     try:
         return await manager.update(
             body, user, safe=False, request=request

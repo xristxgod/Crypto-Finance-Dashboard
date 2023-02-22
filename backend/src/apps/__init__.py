@@ -3,7 +3,6 @@ from fastapi.routing import APIRouter
 from . import users
 from . import telegram
 from . import accounts
-from . import auth
 
 __all__ = (
     'connector_v1',
@@ -15,7 +14,7 @@ connector_v1 = APIRouter()
 
 # Connector V1
 connector_v1.include_router(
-    users.router,
+    users.users_router,
     prefix='/users',
     tags=['Users'],
 )
@@ -31,7 +30,7 @@ connector_v1.include_router(
 )
 # Connector
 connector.include_router(
-    auth.router,
+    users.auth_router,
     prefix='/auth',
     tags=['Auth'],
 )

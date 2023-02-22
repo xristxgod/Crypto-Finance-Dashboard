@@ -1,5 +1,5 @@
 from .auth import router as auth_router
-from .users import router as users_router
+from .main import router as users_router
 
 __all__ = (
     'users_router',

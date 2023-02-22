@@ -1,12 +1,11 @@
 from fastapi import APIRouter
 from fastapi.params import Depends
-
 from tortoise import transactions
 
-from apps.users.config import current_active_user
-from apps.users.utils import get_user_or_404
+from apps.users import current_active_user, get_user_or_404
+
 from apps.telegram import schemas
-from .models import Telegram, TelegramReferralLink
+from apps.telegram.models import Telegram, TelegramReferralLink
 
 
 router = APIRouter(

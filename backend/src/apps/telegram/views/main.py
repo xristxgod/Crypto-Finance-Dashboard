@@ -28,7 +28,7 @@ async def get_telegram(user=Depends(current_active_user)):
             referral_code = TelegramReferralLink(user_id=user.id)
 
             await referral_code.save()
-            return schemas.BodyTelegramReferralLink(url=referral_code.url)
+            return schemas.BodyTelegramReferralLink(link=referral_code.url)
 
     return await schemas.TelegramDB.from_queryset_single(Telegram.get(user_id=user.id))
 

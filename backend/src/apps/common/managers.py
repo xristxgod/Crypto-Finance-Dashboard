@@ -10,11 +10,8 @@ __all__ = (
     'BaseModelDB',
     'BaseManager',
     'ModelDB',
+    'TortoiseDatabase',
 )
-
-
-class BaseBodyCreate(BaseModel):
-    pass
 
 
 class BaseModelDB(BaseModel):
@@ -24,7 +21,6 @@ class BaseModelDB(BaseModel):
 
 
 ModelDB = TypeVar("ModelDB", bound=BaseModelDB)
-CreateModel = TypeVar('CreateModel', bound=BaseBodyCreate)
 
 
 class BaseDatabase(Generic[ModelDB]):
@@ -46,7 +42,7 @@ class BaseDatabase(Generic[ModelDB]):
         raise NotImplementedError()
 
 
-class BaseManager(Generic[CreateModel, ModelDB]):
+class BaseManager(Generic[BaseModel, ModelDB]):
     db_model: Type[ModelDB]
 
     db: BaseDatabase[ModelDB]
@@ -58,12 +54,7 @@ class BaseManager(Generic[CreateModel, ModelDB]):
         self.db = db_model
 
     async def get(self, id: int | str | UUID4) -> Optional[ModelDB]:
-        model = await self.db.get(id)
-
-        if model is None:
-            raise self.DoesNotExists()
-
-        return model
+        return await self.db.get(id)
 
     async def create(self, model: ModelDB, request: Optional[Request] = None) -> ModelDB:
         db_model = self.db_model(**model.dict())
@@ -109,17 +100,15 @@ class TortoiseDatabase(BaseDatabase[ModelDB]):
         self.model = model
 
     async def get(self, id: int | str | UUID4) -> Optional[ModelDB]:
-        try:
-            query = self.model.get(id=id)
+        query = self.model.get(id=id)
 
-            model = await query
-            pydantic_model = await cast(
-                PydanticModel, self.db_model
-            ).from_tortoise_orm(model)
+        model = await query
+        pydantic_model = await cast(
+            PydanticModel, self.db_model
+        ).from_tortoise_orm(model)
 
-            return cast(ModelDB, pydantic_model)
-        except DoesNotExist:
-            return None
+        return cast(ModelDB, pydantic_model)
+
 
     async def create(self, model: ModelDB) -> ModelDB:
         user_dict = model.dict()

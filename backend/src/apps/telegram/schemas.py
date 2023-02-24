@@ -1,7 +1,8 @@
 from pydantic import BaseModel, validator
 from tortoise.contrib.pydantic import PydanticModel
 
-from .models import Telegram
+from apps.common.managers import BaseModelDB
+from apps.telegram.models import Telegram
 
 
 class BodyTelegram(BaseModel):
@@ -17,10 +18,10 @@ class BodyTelegram(BaseModel):
 
 
 class BodyTelegramReferralLink(BaseModel):
-    url: str
+    link: str
 
 
-class TelegramDB(BodyTelegram, PydanticModel):
+class TelegramDB(BodyTelegram, BaseModelDB, PydanticModel):
     class Config:
         orm_mode = True
         orig_model = Telegram

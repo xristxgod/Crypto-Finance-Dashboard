@@ -2,10 +2,11 @@ from typing import Optional, cast
 
 from fastapi.requests import Request
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi_users.manager import BaseUserManager, UserNotExists
+from fastapi_users.manager import BaseUserManager
+from fastapi_users.exceptions import UserNotExists
 from fastapi_users import models, password
 from tortoise.contrib.pydantic.base import PydanticModel
-from fastapi_users.db import TortoiseUserDatabase
+from fastapi_users.db import BaseUserDatabase
 
 from config import settings
 
@@ -66,7 +67,7 @@ class UserManager(BaseUserManager[BodyUserCreate, UserDB]):
         return user
 
 
-class CustomTortoiseUserDatabase(TortoiseUserDatabase[models.UD]):
+class CustomTortoiseUserDatabase(BaseUserDatabase[models.UD]):
 
     async def get_by_username(self, username: str):
         query = self.model.filter(username__iexact=username).first()

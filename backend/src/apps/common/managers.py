@@ -3,7 +3,6 @@ from typing import Generic, TypeVar, Type, Optional, Any, NoReturn, cast
 from fastapi.requests import Request
 from pydantic import BaseModel, UUID4
 from tortoise.models import MODEL
-from tortoise.exceptions import DoesNotExist
 from tortoise.contrib.pydantic.base import PydanticModel
 
 __all__ = (

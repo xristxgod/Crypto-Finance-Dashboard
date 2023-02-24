@@ -1,19 +1,20 @@
 from typing import Optional
 
-from pydantic import EmailStr
+from pydantic import EmailStr, UUID4
 from fastapi_users import models
 from tortoise.contrib.pydantic import PydanticModel
 
 from apps.users.models import User
 
 
-class BodyUser(models.BaseUser):
+class BodyUser(models.UserProtocol):
+    id: UUID4
     username: str
     phone_number: Optional[str] = None
     email: Optional[EmailStr] = None
 
 
-class BodyUserCreate(models.BaseUserCreate):
+class BodyUserCreate(Base):
     username: str
     phone_number: Optional[str]
     email: Optional[EmailStr] = None

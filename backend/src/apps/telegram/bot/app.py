@@ -10,7 +10,7 @@ __all__ = (
 )
 
 
-app = Bot(token=settings.TELEGRAM_TOKEN)
+app = Bot(token=settings.TELEGRAM_BOT_CONFIG['token'])
 dp = Dispatcher(app)
 
 dp.middleware.setup(middlewares.UserMiddleware())

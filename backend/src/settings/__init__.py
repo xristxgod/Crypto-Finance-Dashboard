@@ -13,21 +13,25 @@ __all__ = (
 
 
 class Settings:
+    NETWORK: str = NETWORK
+    # Dirs
     ROOT_DIR = ROOT_DIR
     LOGGING_CONFIG_FILE = LOGGING_CONFIG_FILE
-
+    # Swagger
     TITLE: str = TITLE
     VERSION: str = VERSION
+    # Redis
+    REDIS_URL: str = REDIS_URL
+    # Database
     APPS_MODELS: tuple = APPS_MODELS
-
-    NETWORK: str = NETWORK
     DATABASE_CONFIG: dict = DATABASE_CONFIG
     TEST_DATABASE_CONFIG: dict = TEST_DATABASE_CONFIG
-
-    SECRET_KEY_AUTH: str = SECRET_KEY_AUTH
-
-    TELEGRAM_TOKEN: str = TELEGRAM_TOKEN
-    TELEGRAM_BOT_NAME: str = TELEGRAM_BOT_NAME
-
-    WEBHOOK_URL = WEBHOOK_URL
+    # Language
+    LANGUAGES: tuple = LANGUAGES
+    # Auth
     COOKIE_NAME: str = COOKIE_NAME
+    AUTH_SECRET_KEY: str = AUTH_SECRET_KEY
+    # Telegram
+    TELEGRAM_BOT_CONFIG: dict = TELEGRAM_BOT_CONFIG
+    # Other
+    WEBHOOK_URL = WEBHOOK_URL

@@ -6,7 +6,7 @@ from apps.telegram.models import TelegramReferralLink
 
 async def start(message: types.Message, user: services.UserData):
     if user is None:
-        return
+        return message.answer('')
 
     if user.is_created:
         pass

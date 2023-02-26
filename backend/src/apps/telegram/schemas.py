@@ -1,27 +1,26 @@
-from pydantic import BaseModel, validator
-from tortoise.contrib.pydantic import PydanticModel
+from datetime import datetime
 
-from apps.common.managers import BaseModelDB
+from pydantic import BaseModel
+from tortoise.contrib.pydantic.base import PydanticModel
+
+from core.users import BodySubModel
 from apps.telegram.models import Telegram
 
 
-class BodyTelegram(BaseModel):
-    chat_id: int
-    username: str
-    is_active: bool
-
-    @validator('username')
-    def username_validator(cls, v: str):
-        if not v.startswith('@'):
-            v = '@' + v
-        return v
-
-
-class BodyTelegramReferralLink(BaseModel):
+class ResponseTelegramReferralLink(BaseModel):
     link: str
 
 
-class TelegramDB(BodyTelegram, BaseModelDB, PydanticModel):
+class BodyTelegram(BodySubModel, PydanticModel):
+    chat_id: int
+    username: str
+    is_active: bool
+    created_at: datetime
+    modified_at: datetime
+
     class Config:
         orm_mode = True
-        orig_model = Telegram
+        model = Telegram
+        exclude = (
+            'user',
+        )

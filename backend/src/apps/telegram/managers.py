@@ -1,11 +1,13 @@
-from apps.common.managers import BaseManager
+from fastapi.params import Depends
 
-from apps.telegram.schemas import TelegramDB, BodyTelegram
-
-__all__ = (
-    'TelegramManager',
-)
+from core.users.managers import UserDatabase, UserManager
+from core.users.models import User
+from apps.telegram.models import Telegram
 
 
-class TelegramManager(BaseManager[BodyTelegram, TelegramDB]):
-    db_model = TelegramDB
+def get_telegram_db():
+    yield UserDatabase(User, Telegram)
+
+
+async def get_telegram_manager(user_db: UserDatabase = Depends(get_telegram_db)):
+    yield UserManager(user_db)

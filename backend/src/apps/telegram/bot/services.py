@@ -4,9 +4,8 @@ from dataclasses import dataclass
 from aiogram import types
 from tortoise import transactions
 
-from apps.users import User
-
-from apps.telegram.models import Telegram, TelegramReferralLink
+from core.users.models import User
+from apps.telegram.models import Telegram
 
 
 @dataclass()
@@ -42,13 +41,11 @@ class UserData:
 
     async def add_to_db(self, user: User) -> NoReturn:
         async with transactions.in_transaction('default'):
-            telegram = Telegram(
+            telegram = await Telegram.create(
                 chat_id=self.chat_id,
                 username=self.username,
                 user=user,
             )
-            await TelegramReferralLink.filter(user=user).delete()
-            await telegram.save()
             self.user = user
 
     async def setup(self) -> Self:

@@ -30,8 +30,8 @@ class Message(models.Model):
     message_RU = fields.JSONField(default=dict)
 
     @classmethod
-    async def get_message(cls, tag: str, language_id: str) -> dict:
-        return (await cls.get(tag=tag).values_list(f'message_{language_id}', flat=True))[0]
+    async def get_message(cls, tag: str, language_id: str):
+        return await cls.get(tag=tag).values_list(f'message_{language_id}', flat=True)
 
     class Meta:
         table = "telegram_message"

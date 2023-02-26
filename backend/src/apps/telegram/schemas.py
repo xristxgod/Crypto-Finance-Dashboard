@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, AnyUrl
 from tortoise.contrib.pydantic.base import PydanticModel
 
 from core.users import BodySubModel
@@ -8,7 +8,7 @@ from apps.telegram.models import Telegram
 
 
 class ResponseTelegramReferralLink(BaseModel):
-    link: str
+    link: AnyUrl
 
 
 class BodyTelegram(BodySubModel, PydanticModel):

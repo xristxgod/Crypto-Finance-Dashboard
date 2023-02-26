@@ -38,7 +38,7 @@ class CurrentUser(BaseUser):
 
     def __init__(self, user: User, telegram_info: TelegramInfo):
         self.info = user
-        super().__init__(telegram_info=telegram_info, language_id=user.language.id)
+        super().__init__(telegram_info=telegram_info, language_id=user.language_id)
 
     @property
     def is_created(self) -> bool:
@@ -59,7 +59,7 @@ class Manager:
             first_name=obj.chat.first_name,
             last_name=obj.chat.last_name,
         )
-        user = await User.get_or_none(telegram__chat_id=telegram_info.id)
+        user = await User.get_or_none(telegram__id=telegram_info.id)
         if user:
             return CurrentUser(user=user, telegram_info=telegram_info)
         return AnonymousUser(telegram_info=telegram_info)
@@ -78,11 +78,11 @@ def current_user(func: Callable):
 async def registration_by_referral_link(code: str, user: BaseUser) -> bool:
     async with transactions.in_transaction('default'):
         referral = await TelegramReferralLink.get(code=code)
-        if referral:
+        if not referral:
             return False
         await Telegram.create(
             id=user.telegram_info.id,
             username=user.telegram_info.username,
-            user=referral.user
+            user=referral.user_id
         )
         return True

@@ -38,11 +38,9 @@ class messanger:
         from apps.telegram.bot import bot
 
         message_conf = {
-            'chat_id': user.chat_id
+            'chat_id': user.chat_id,
+            'text': db_message.get('message', ' ')
         }
-
-        if db_message.get('message'):
-            message_conf['text'] = db_message['message']
 
         if db_message.get('inline_button'):
             keyboard = types.InlineKeyboardMarkup()

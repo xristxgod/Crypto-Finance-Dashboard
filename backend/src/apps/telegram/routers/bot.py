@@ -26,7 +26,7 @@ async def on_shutdown():
     await bot.session.close()
 
 
-@router.post('')
+@router.post('/webhook')
 async def bot_webhook(request: Request):
     telegram_update = types.Update(**await request.json())
     Dispatcher.set_current(dp)

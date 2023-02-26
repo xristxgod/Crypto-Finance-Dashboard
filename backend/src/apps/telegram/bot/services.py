@@ -1,11 +1,11 @@
-from typing import Optional, NoReturn, Self
+import functools
+from typing import Optional, Callable
 from dataclasses import dataclass
 
-from aiogram import types
 from tortoise import transactions
 
 from core.users.models import User
-from apps.telegram.models import Telegram
+from apps.telegram.models import Telegram, TelegramReferralLink
 
 
 @dataclass()
@@ -16,17 +16,10 @@ class TelegramInfo:
     last_name: str
 
 
-class UserData:
-
-    def __init__(self, obj: types.Message):
-        self.telegram_info = TelegramInfo(
-            id=obj.chat.id,
-            username='@' + obj.chat.username,
-            first_name=obj.chat.first_name,
-            last_name=obj.chat.last_name,
-        )
-        self.info: Optional[User] = None
-        self.language_id = 'ENG'
+class BaseUser:
+    def __init__(self, telegram_info: TelegramInfo, language_id: Optional[str] = 'ENG'):
+        self.telegram_info = telegram_info
+        self.language_id = language_id
 
     @property
     def chat_id(self) -> int:
@@ -38,18 +31,58 @@ class UserData:
 
     @property
     def is_created(self) -> bool:
-        return self.info is not None
+        return False
 
-    async def add_to_db(self, user: User) -> NoReturn:
-        async with transactions.in_transaction('default'):
-            await Telegram.create(
-                chat_id=self.chat_id,
-                username=self.username,
-                user=user,
-            )
-            self.info = user
-            self.language_id = user.language.id
 
-    async def setup(self) -> Self:
-        self.info = await User.filter(telegram__chat_id=self.telegram_info.id).first()
-        return self
+class CurrentUser(BaseUser):
+
+    def __init__(self, user: User, telegram_info: TelegramInfo):
+        self.info = user
+        super().__init__(telegram_info=telegram_info, language_id=user.language.id)
+
+    @property
+    def is_created(self) -> bool:
+        return True
+
+
+class AnonymousUser(BaseUser):
+    pass
+
+
+class Manager:
+
+    @classmethod
+    async def setup(cls, obj) -> BaseUser:
+        telegram_info = TelegramInfo(
+            id=obj.chat.id,
+            username='@' + obj.chat.username,
+            first_name=obj.chat.first_name,
+            last_name=obj.chat.last_name,
+        )
+        user = await User.get_or_none(telegram__chat_id=telegram_info.id)
+        if user:
+            return CurrentUser(user=user, telegram_info=telegram_info)
+        return AnonymousUser(telegram_info=telegram_info)
+
+
+def current_user(func: Callable):
+    @functools.wraps(func)
+    async def wrapper(message, user: BaseUser, **kwargs):
+        if isinstance(user, AnonymousUser):
+            from apps.telegram.bot.messanger import messanger
+            return messanger.get_message('user_not_found', user, message)
+        return await func(message, user, **kwargs)
+    return wrapper
+
+
+async def registration_by_referral_link(code: str, user: BaseUser) -> bool:
+    async with transactions.in_transaction('default'):
+        referral = await TelegramReferralLink.get(code=code)
+        if referral:
+            return False
+        await Telegram.create(
+            id=user.telegram_info.id,
+            username=user.telegram_info.username,
+            user=referral.user
+        )
+        return True

@@ -15,10 +15,10 @@ class Message(models.Model):
     The form of writing messages to the database.
     {
         "message": "message text",
-        "button": [
+        "inline_button": [
             {
-              "type": "",
-              "text": ""
+              "text": "",
+              "callback_data": ""
             }
         ]
     }

@@ -1,8 +1,9 @@
+from aiogram import types
 from tortoise import transactions
 from fastapi_cache.decorator import cache
 
 from apps.telegram.models import Message
-from apps.telegram.bot.services import UserData
+from apps.telegram.bot.services import BaseUser
 
 __all__ = (
     'messanger',
@@ -14,8 +15,10 @@ EXPIRE_TIME = 60
 class messanger:
 
     tags = (
+        'referral_code_not_found',
         'user_not_found',
         'start',
+        'menu',
     )
 
     @classmethod
@@ -31,14 +34,26 @@ class messanger:
                 ])
 
     @classmethod
-    async def _make_message(cls, message: dict, user: UserData):
-        from aiogram import types
+    async def _make_message(cls, db_message: dict, user: BaseUser, message: types.Message):
+        from apps.telegram.bot import bot
 
-        if message['message']:
-            pass
+        message_conf = {
+            'chat_id': user.chat_id
+        }
+
+        if db_message.get('message'):
+            message_conf['text'] = db_message['message']
+
+        if db_message.get('inline_button'):
+            keyboard = types.InlineKeyboardMarkup()
+            for button in db_message['inline_button']:
+                keyboard.add(**button)
+            message_conf['reply_markup'] = keyboard
+
+        return await bot.send_message(**message_conf)
 
     @classmethod
     @cache(expire=EXPIRE_TIME)
-    async def get_message(cls, tag: str, user: UserData):
-        message = await Message.get_message(tag, user.language_id)
-        return await cls._make_message(message, user)
+    async def get_message(cls, tag: str, user: BaseUser, message: types.Message):
+        db_message = await Message.get_message(tag, user.language_id)
+        return await cls._make_message(db_message, user, message)

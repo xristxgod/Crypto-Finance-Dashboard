@@ -25,7 +25,8 @@ class UserData:
             first_name=obj.chat.first_name,
             last_name=obj.chat.last_name,
         )
-        self.user: Optional[User] = None
+        self.info: Optional[User] = None
+        self.language_id = 'ENG'
 
     @property
     def chat_id(self) -> int:
@@ -37,17 +38,18 @@ class UserData:
 
     @property
     def is_created(self) -> bool:
-        return self.user is not None
+        return self.info is not None
 
     async def add_to_db(self, user: User) -> NoReturn:
         async with transactions.in_transaction('default'):
-            telegram = await Telegram.create(
+            await Telegram.create(
                 chat_id=self.chat_id,
                 username=self.username,
                 user=user,
             )
-            self.user = user
+            self.info = user
+            self.language_id = user.language.id
 
     async def setup(self) -> Self:
-        self.user = await User.filter(telegram__chat_id=self.telegram_info.id).first()
+        self.info = await User.filter(telegram__chat_id=self.telegram_info.id).first()
         return self

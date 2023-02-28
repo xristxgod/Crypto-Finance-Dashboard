@@ -13,6 +13,6 @@ __all__ = (
 app = Bot(token=settings.TELEGRAM_BOT_CONFIG['token'])
 dp = Dispatcher(app)
 
-dp.middleware.setup(middlewares.UserMiddleware())
+dp.middleware.setup(middlewares.UserDatabaseMiddleware())
 
 dp.register_message_handler(handlers.start, commands=['start'])

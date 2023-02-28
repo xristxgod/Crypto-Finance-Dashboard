@@ -1,3 +1,5 @@
+from typing import Any
+
 from aiogram import types
 from tortoise import transactions
 from fastapi_cache.decorator import cache
@@ -34,12 +36,12 @@ class messanger:
                 ])
 
     @classmethod
-    async def _make_message(cls, db_message: dict, user: BaseUser, message: types.Message):
+    async def _make_message(cls, db_message: dict[str, Any], user: BaseUser, message: types.Message):
         from apps.telegram.bot import bot
 
         message_conf = {
             'chat_id': user.chat_id,
-            'text': db_message.get('message', ' ')
+            'text': db_message.get('message', 'Error')
         }
 
         if db_message.get('inline_button'):

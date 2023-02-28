@@ -5,8 +5,9 @@ from pathlib import Path
 
 NETWORK = os.getenv('NETWORK', 'DEV')
 
-ROOT_DIR = Path(__file__).parent.parent.parent
+ROOT_DIR = Path(__file__).parent.parent.parent.parent
 CONFIG_DIR = ROOT_DIR / 'config'
+BASE_DIR = ROOT_DIR / 'src'
 LOGGING_CONFIG_FILE = CONFIG_DIR / 'logging.ini'
 
 APPS_MODELS = (

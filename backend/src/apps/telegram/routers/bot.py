@@ -12,7 +12,7 @@ router = APIRouter()
 @router.on_event('startup')
 async def startup():
     # Create messanger
-    await messanger.setup()
+    await messanger.setup(True)
     # Create webhook
     webhook_info = await bot.get_webhook_info()
     if webhook_info.url != TELEGRAM_WEBHOOK_URL:

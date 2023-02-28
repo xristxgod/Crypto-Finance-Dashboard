@@ -16,6 +16,8 @@ class Settings:
     NETWORK: str = NETWORK
     # Dirs
     ROOT_DIR = ROOT_DIR
+    BASE_DIR = BASE_DIR
+    CONFIG_DIR = CONFIG_DIR
     LOGGING_CONFIG_FILE = LOGGING_CONFIG_FILE
     # Swagger
     TITLE: str = TITLE

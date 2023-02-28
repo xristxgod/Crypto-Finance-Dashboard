@@ -13,13 +13,13 @@ from apps.telegram.middlewares.tg_user_database import BaseUser
 from apps.telegram.config import TELEGRAM_CONFIG_DIR
 
 __all__ = (
-    'messanger',
+    'tg_messanger',
 )
 
 EXPIRE_TIME = 60
 
 
-class messanger:
+class tg_messanger:
     args_pattern = re.compile(r'(?P<args>{{[A-Z]+}})')
 
     tags = (
@@ -70,8 +70,9 @@ class messanger:
         return emoji.emojize(text, language='alias')
 
     @classmethod
-    async def _make_message(cls, db_message: dict[str, Any], user: BaseUser, message: types.Message):
-        from apps.telegram.bot_apps import bot
+    async def _make_message(cls, db_message: dict[str, Any], user: BaseUser,
+                            message: types.Message | types.CallbackQuery):
+        from apps.telegram.bot_init import app as bot
 
         message_conf = {
             'chat_id': user.chat_id,
@@ -90,6 +91,6 @@ class messanger:
 
     @classmethod
     @cache(expire=EXPIRE_TIME)
-    async def get_message(cls, tag: str, user: BaseUser, message: types.Message):
+    async def get_message(cls, tag: str, user: BaseUser, message: types.Message | types.CallbackQuery):
         db_message = await Message.get_message(tag, user.language_id)
         return await cls._make_message(db_message, user, message)

@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.requests import Request
 from aiogram import Dispatcher, Bot, types
 
-from apps.telegram.messanger import messanger
+from apps.telegram.tg_messanger import tg_messanger
 from apps.telegram.bot_init import app as bot, dp
 from apps.telegram.config import TELEGRAM_WEBHOOK_URL
 
@@ -12,7 +12,7 @@ router = APIRouter()
 @router.on_event('startup')
 async def startup():
     # Create messanger
-    await messanger.setup(True)
+    await tg_messanger.setup()
     # Create webhook
     webhook_info = await bot.get_webhook_info()
     if webhook_info.url != TELEGRAM_WEBHOOK_URL:

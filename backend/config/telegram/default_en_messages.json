@@ -1,0 +1,63 @@
+[
+  {
+    "tag": "referral_code_not_found",
+    "message_ENG": {
+      "text": ":cold_sweat: This referral code was not found.\n:heart: Repeat later, or contact support!"
+    }
+  },
+  {
+    "tag": "user_not_found",
+    "message_ENG": {
+      "text": ":anger: We couldn't find you in the system.\n Please register on the website, or register here.",
+      "inline_button": [
+        {
+          "text": ":arrow_heading_up: Go to the website",
+          "url": "http://127.0.0.1:8000"
+        },
+        {
+          "text": ":eight_spoked_asterisk: Register here",
+          "callback_data": "registration"
+        }
+      ]
+    }
+  },
+  {
+    "tag": "start",
+    "message_ENG": {
+      "text": "Welcome to the platform!\n Click on the button ':white_check_mark: Confirm' to confirm your account",
+      "inline_button": [
+        {
+          "text": ":white_check_mark: Confirm",
+          "callback_data": "registration"
+        }
+      ]
+    }
+  },
+  {
+    "tag": "success_registration",
+    "message_ENG": {
+      "text": ":boom: You have successfully registered!\n Click on the ':metal: Menu' button to get a list of features. Also click on the ':love_letter: Help' button to find out the full list of features!",
+      "inline_button": [
+        {
+          "text": ":metal: Menu",
+          "callback_data": "menu"
+        },
+        {
+          "text": ":love_letter: Help",
+          "callback_data": "help"
+        }
+      ]
+    }
+  },
+  {
+    "tag": "menu",
+    "message_ENG": {
+      "text": "Menu",
+      "inline_button": [
+        {
+          "text": "Something"
+        }
+      ]
+    }
+  }
+]

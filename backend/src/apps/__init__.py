@@ -1,38 +1,10 @@
-from fastapi.routing import APIRouter
+from fastapi import APIRouter
 
-from .users import views as users_views
-from .telegram import views as telegram_views
-from .accounts import views as accounts_views
+from .telegram import routers as tg_router
 
-__all__ = (
-    'connector_v1',
-)
+router = APIRouter()
 
-webhooks = APIRouter()
-connector = APIRouter()
-connector_v1 = APIRouter()
-
-# Connector V1
-connector_v1.include_router(
-    users_views.users_router,
-    prefix='/users',
-    tags=['Users'],
-)
-connector_v1.include_router(
-    telegram_views.telegram_router,
-    prefix='/telegram',
-    tags=['Telegram'],
-)
-connector_v1.include_router(
-    accounts_views.accounts_router,
-    prefix='/accounts',
-    tags=['Accounts'],
-)
-# Connector
-connector.include_router(
-    users_views.auth_router,
-    prefix='/auth',
-    tags=['Auth'],
-)
-# Webhooks
-webhooks.include_router(telegram_views.bot_router, prefix='/telegram')
+# Telegram
+router.include_router(tg_router.telegram_router, prefix='/telegram', tags=['Telegram'])
+# Telegram bot_apps
+router.include_router(tg_router.telegram_bot_router, prefix='/telegram-bot_apps', tags=['Telegram Bot'])

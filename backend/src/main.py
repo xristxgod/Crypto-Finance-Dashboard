@@ -1,17 +1,21 @@
-import fastapi
+from fastapi import FastAPI
 
-import apps
-from core import database
-from config import settings
+from core import router as c_router
+from apps import router as a_router
 
-app = fastapi.FastAPI(
-    title=settings.TITLE,
-    version=settings.VERSION
-)
+import core.database as database
+import core.caches as caches
+
+app = FastAPI()
 
 database.connect(app)
 
-app.include_router(apps.connector, prefix='/api')
-app.include_router(apps.connector_v1, prefix='/api/v1')
-# Webhooks
-app.include_router(apps.webhooks, prefix='/webhook', tags=['Webhooks'])
+
+@app.on_event("startup")
+async def startup():
+    await caches.connect()
+
+# Core
+app.include_router(c_router, prefix='/api')
+# Apps
+app.include_router(a_router, prefix='/api')

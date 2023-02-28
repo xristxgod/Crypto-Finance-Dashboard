@@ -44,7 +44,8 @@ class messanger:
                     setattr(message, 'message_ENG', json.dumps(valid_default_message[0].get('message_ENG')))
                     update_message.append(message)
 
-            await Message.bulk_update(update_message, fields=['message_ENG'])
+            if update_message:
+                await Message.bulk_update(update_message, fields=['message_ENG'])
 
     @classmethod
     async def setup(cls, set_default_message: bool = False):
@@ -74,7 +75,7 @@ class messanger:
 
         message_conf = {
             'chat_id': user.chat_id,
-            'text': await cls._make_text(db_message.get('message', 'Error'))
+            'text': await cls._make_text(db_message.get('text', 'Error'))
         }
 
         if db_message.get('inline_button'):

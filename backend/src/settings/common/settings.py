@@ -58,3 +58,5 @@ TELEGRAM_BOT_CONFIG = {
 }
 
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
+
+DOMAIN_URL = os.getenv('DOMAIN_URL')

@@ -12,7 +12,7 @@
       "inline_button": [
         {
           "text": ":arrow_heading_up: Go to the website",
-          "url": "{{DOMAIN_URL}}"
+          "url": "http://127.0.0.1:8000"
         },
         {
           "text": ":eight_spoked_asterisk: Register here",

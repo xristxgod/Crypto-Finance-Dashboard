@@ -9,7 +9,7 @@ from fastapi_cache.decorator import cache
 
 from config import settings
 from apps.telegram.models import Message
-from apps.telegram.bot.services import BaseUser
+from apps.telegram.middlewares.tg_user_database import BaseUser
 from apps.telegram.config import TELEGRAM_CONFIG_DIR
 
 __all__ = (
@@ -23,9 +23,9 @@ class messanger:
     args_pattern = re.compile(r'(?P<args>{{[A-Z]+}})')
 
     tags = (
+        'start',
         'referral_code_not_found',
         'user_not_found',
-        'start',
         'success_registration',
         'menu',
     )
@@ -71,7 +71,7 @@ class messanger:
 
     @classmethod
     async def _make_message(cls, db_message: dict[str, Any], user: BaseUser, message: types.Message):
-        from apps.telegram.bot import bot
+        from apps.telegram.bot_apps import bot
 
         message_conf = {
             'chat_id': user.chat_id,

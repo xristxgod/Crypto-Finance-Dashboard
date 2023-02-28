@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from fastapi.requests import Request
 from aiogram import Dispatcher, Bot, types
 
-from apps.telegram.bot.messanger import messanger
-from apps.telegram.bot import bot, dp
+from apps.telegram.messanger import messanger
+from apps.telegram.bot_init import app as bot, dp
 from apps.telegram.config import TELEGRAM_WEBHOOK_URL
 
 router = APIRouter()

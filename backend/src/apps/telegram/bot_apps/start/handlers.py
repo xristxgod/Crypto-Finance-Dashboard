@@ -1,12 +1,16 @@
 from aiogram import types
 
-from apps.telegram.bot import services
-from apps.telegram.bot.middlewares.user_database import BaseUser, AnonymousUser
-from apps.telegram.bot.utils import current_user
-from apps.telegram.bot.messanger import messanger
+from apps.telegram.bot_apps import services
+from apps.telegram.middlewares.tg_user_database import BaseUser, AnonymousUser
+from apps.telegram.utils import current_user
+from apps.telegram.messanger import messanger
 
 
-async def start(message: types.Message, user: BaseUser):
+async def registration_handler(message: types.Message):
+    pass
+
+
+async def start_handler(message: types.Message, user: BaseUser):
     referral_code = None
     if ' ' in message.text:
         referral_code = message.text.split()[1]
@@ -24,5 +28,5 @@ async def start(message: types.Message, user: BaseUser):
 
 
 @current_user
-async def menu(message: types.Message, user: BaseUser):
+async def menu_handler(message: types.Message, user: BaseUser):
     return await messanger.get_message('menu', user, message)
